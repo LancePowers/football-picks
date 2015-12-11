@@ -10,13 +10,17 @@ fs.readFile('output.json', 'utf-8', function (err, data) {
     //createWeek(data);
 });
 
-Stat.findOne(function (err, res) {
-    console.log(err);
+Stat.findOne({
+    week: 14
+}, function (err, res) {
+    //    console.log(err);
+    console.log('!!HERE!!');
+    console.log(res);
     newWeek.populateTeams(res);
 });
 
 Schedule.findOne({
-    week: 6
+    week: 14
 }, function (err, res) {
     newWeek.populateGames(res.teams);
 });
@@ -64,7 +68,7 @@ Week.prototype.populateGames = function (schedule) {
         }
         this.games[i].inputIndex = teamIndex + homeAway;
         teamIndex += 2;
-        console.log("Home Team: " + this.games[i].home.full + "Score " + this.games[i].home.score + " Away Team: " + this.games[i].away.full + " Score " + this.games[i].away.score + " Favorite " + this.games[i].favorite.full + " Spread " + this.games[i].spread + " Weight " + this.games[i].weight);
+        //        console.log("Home Team: " + this.games[i].home.full + "Score " + this.games[i].home.score + " Away Team: " + this.games[i].away.full + " Score " + this.games[i].away.score + " Favorite " + this.games[i].favorite.full + " Spread " + this.games[i].spread + " Weight " + this.games[i].weight);
     }
 
 }
@@ -96,13 +100,13 @@ Week.prototype.rankGames = function () {
     });
     for (var i = 0; i < rankedGames.length; i++) {
         if (rankedGames[i].home.full === 'Denver') {
-            console.log('!!Denver ' + i);
+            //            console.log('!!Denver ' + i);
             rankedGames[i].favorite === rankedGames[i].home;
             broncosIndex = i;
         } else if (rankedGames[i].away.full === 'Denver') {
             rankedGames[i].favorite === rankedGames[i].away;
             broncosIndex = i;
-            console.log('!!Denver ' + i);
+            //            console.log('!!Denver ' + i);
         }
     }
     if (broncosIndex !== null) {

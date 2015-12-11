@@ -32,7 +32,14 @@ browser.findElement(webdriver.By.id("login_button")).click();
 browser.findElement(webdriver.By.xpath('//*[@id="nav-one"]/li[2]/a')).click();
 browser.findElement(webdriver.By.xpath('/html/body/table[2]/tbody/tr/td/table[2]/tbody/tr/td[1]/div/div[1]/div[1]/div[2]/a[3]')).click();
 browser.findElement(webdriver.By.xpath('//*[@id="nav-pool"]/li[2]/a')).click();
-browser.findElement(webdriver.By.xpath('//*[@id="nav-pool"]/li[2]/ul/li[1]/a')).click();
+
+
+//// *** view Standings *** //
+//browser.findElement(webdriver.By.xpath('//*[@id="nav-pool"]/li[3]')).click();
+//browser.findElement(webdriver.By.xpath('//*[@id="nav-pool"]/li[3]/ul/li[1]/a')).click();
+//browser.executeScript("window.scrollBy(0,300)", "");
+
+// * * * make Picks * * * //
+browser.findElement(webdriver.By.xpath('//*[@id= "nav-pool"] / li[2] / ul / li[1] / a ')).click();
 browser.findElements(webdriver.By.tagName('input')).then(selectTeams);
 browser.findElements(webdriver.By.tagName('select')).then(addWeights);
-//browser.wait(findTutsPlusLink, 2000).then(clickLink).then(logTitle).then(closeBrowser, handleFailure);
