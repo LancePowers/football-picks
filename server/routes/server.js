@@ -8,6 +8,7 @@ var Stat = require('../models/stats');
 var Schedule = require('../models/schedule');
 var ranking = require('../logic/ranking');
 var submit = require('../logic/submit');
+
 routes.get('/stats', function (req, res) {
     url = 'http://www.footballoutsiders.com/stats/teameff';
 
@@ -40,7 +41,7 @@ routes.get('/stats', function (req, res) {
             json.scores.splice(0, 1);
 
             var newStat = new Stat({
-                week: 14,
+                week: 16,
                 teams: json.teams,
                 scores: json.scores
             });
@@ -76,7 +77,7 @@ routes.get('/games', function (req, res) {
 
             var $ = cheerio.load(html);
 
-            var week = 14;
+            var week = 16;
             var teams = [];
             var games = [];
 

@@ -14,6 +14,7 @@ function selectTeams(inputs) {
 }
 
 function addWeights(selections) {
+    console.log(selections)
     for (var i = 0; i < selections.length; i++) {
         var weight = newWeek.games[i].weight
         console.log(weight)

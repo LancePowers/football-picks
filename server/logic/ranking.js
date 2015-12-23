@@ -5,22 +5,14 @@ var fs = require('fs');
 
 var newWeek = new Week();
 
-fs.readFile('output.json', 'utf-8', function (err, data) {
-    if (err) throw err;
-    //createWeek(data);
-});
-
 Stat.findOne({
-    week: 14
+    week: 16
 }, function (err, res) {
-    //    console.log(err);
-    console.log('!!HERE!!');
-    console.log(res);
     newWeek.populateTeams(res);
 });
 
 Schedule.findOne({
-    week: 14
+    week: 16
 }, function (err, res) {
     newWeek.populateGames(res.teams);
 });
@@ -68,8 +60,8 @@ Week.prototype.populateGames = function (schedule) {
         }
         this.games[i].inputIndex = teamIndex + homeAway;
         teamIndex += 2;
-        //        console.log("Home Team: " + this.games[i].home.full + "Score " + this.games[i].home.score + " Away Team: " + this.games[i].away.full + " Score " + this.games[i].away.score + " Favorite " + this.games[i].favorite.full + " Spread " + this.games[i].spread + " Weight " + this.games[i].weight);
     }
+    console.log(this.games)
 
 }
 
@@ -95,31 +87,26 @@ Week.prototype.rankGames = function () {
         if (a.spread < b.spread) {
             return -1;
         }
-        // a must be equal to b
         return 0;
     });
     for (var i = 0; i < rankedGames.length; i++) {
         if (rankedGames[i].home.full === 'Denver') {
-            //            console.log('!!Denver ' + i);
             rankedGames[i].favorite === rankedGames[i].home;
             broncosIndex = i;
         } else if (rankedGames[i].away.full === 'Denver') {
             rankedGames[i].favorite === rankedGames[i].away;
             broncosIndex = i;
-            //            console.log('!!Denver ' + i);
         }
     }
     if (broncosIndex !== null) {
         var broncos = rankedGames.splice(broncosIndex, 1);
         rankedGames.push(broncos[0]);
     }
-    console.log(rankedGames);
 
     return rankedGames;
 }
 
 function Game(home, away) {
-    //    this.id = id; // Game ids will come from poolhost.com
     this.home = home;
     this.away = away;
     this.spread = null;
