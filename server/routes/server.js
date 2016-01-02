@@ -6,8 +6,15 @@ var routes = express();
 var mongoose = require('mongoose');
 var Stat = require('../models/stats');
 var Schedule = require('../models/schedule');
-var ranking = require('../logic/ranking');
-var submit = require('../logic/submit');
+//var ranking = require('../logic/ranking');
+//var submit = require('../logic/submit');
+var shoe = require('../logic/shoeAnalysis.js')
+
+
+routes.get('/shoeAnalysis', function (req, res) {
+    res.send(shoe);
+});
+
 
 routes.get('/stats', function (req, res) {
     url = 'http://www.footballoutsiders.com/stats/teameff';
@@ -41,7 +48,7 @@ routes.get('/stats', function (req, res) {
             json.scores.splice(0, 1);
 
             var newStat = new Stat({
-                week: 16,
+                week: 17,
                 teams: json.teams,
                 scores: json.scores
             });
@@ -77,7 +84,7 @@ routes.get('/games', function (req, res) {
 
             var $ = cheerio.load(html);
 
-            var week = 16;
+            var week = 17;
             var teams = [];
             var games = [];
 

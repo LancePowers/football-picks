@@ -1,0 +1,41 @@
+<div layout="column">
+    <section layout="row" ng-repeat="pick in vm.picks track by $index">
+        <div layout="column">
+            <div layout="row" class="inputs">
+                <md-input-container style="margin-right: 10px;">
+                    <label>Team</label>
+                    <md-select class="team-select" ng-model="pick.mom.pick" ng-change="vm.update()">
+                        <md-option value="{{pick.home}}">{{pick.home}}</md-option>
+                        <md-option value="{{pick.away}}">{{pick.away}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container style="margin-right: 10px;">
+                    <label>Points</label>
+                    <md-select ng-model="pick.mom.weight" ng-change="vm.update()">
+                        <md-option ng-repeat="value in vm.values" value="{{value}}">{{value}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <md-switch ng-model="pick.win" ng-change="vm.update()" class="md-primary">Lose/Win</md-switch>
+                </md-input-container>
+            </div>
+            <div layout="row" class="sub-line">
+                <p class="md-caption">Sharty:</p>
+                <p class="md-caption"> {{pick.sharty.pick}}</p>
+                <p class="md-caption"> {{pick.sharty.weight}}</p>
+                <p class="md-caption">Lance:</p>
+                <p class="md-caption"> {{pick.lance.pick}}</p>
+                <p class="md-caption"> {{pick.lance.weight}}</p>
+                <h2 class="md-caption"> difference {{pick.mom.weight - pick.sharty.weight}}</h2>
+            </div>
+        </div>
+    </section>
+</div>
+<section class="stats md-whiteframe-2dp" ng-class="{win: vm.momWins, lose: !vm.momWins}" layout="row" layout-padding>
+    <div layout="column" class="display" ng-repeat="point in vm.points">
+        <h4>{{point.name}}</h4>
+        <p>{{point.points}}</p>
+        <p>{{point.season}}</p>
+        <p class="md-warn" ng-show="vm.dupError.isDup">Double: {{vm.dupError.num}}</p>
+    </div>
+</section>

@@ -6,13 +6,13 @@ var fs = require('fs');
 var newWeek = new Week();
 
 Stat.findOne({
-    week: 16
+    week: 17
 }, function (err, res) {
     newWeek.populateTeams(res);
 });
 
 Schedule.findOne({
-    week: 16
+    week: 17
 }, function (err, res) {
     newWeek.populateGames(res.teams);
 });
@@ -60,8 +60,8 @@ Week.prototype.populateGames = function (schedule) {
         }
         this.games[i].inputIndex = teamIndex + homeAway;
         teamIndex += 2;
+        console.log(this.games[i].weight, this.games[i].favorite)
     }
-    console.log(this.games)
 
 }
 
@@ -269,6 +269,7 @@ Team.prototype.toAbbrev = function () {
         }
     }
 }
+
 module.exports = {
     Game: Game,
     Team: Team,
