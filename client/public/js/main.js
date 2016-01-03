@@ -1,7 +1,11 @@
 (function () {
     'use strict';
     console.log('here')
-    var myApp = angular.module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'pickSelect']);
+    var myApp = angular.module('app', ['ngRoute', 'ngResource', 'ngMaterial', 'pickSelect'])
+        .config(function ($mdThemingProvider) {
+            $mdThemingProvider.theme('default')
+                .accentPalette('orange');
+        });
 
     angular.module('pickSelect', []).directive('pickSelect', [pickSelectDirective]);
 
@@ -51,14 +55,43 @@
                 points: 0,
                 season: 1349
                         }];
-
-
         var picks = $http.get('/scrape/shoeAnalysis')
             .then(function handlePicks(req, res, err) {
                 vm.picks = req.data;
                 vm.update();
                 console.log(vm.picks)
             })
+
+        vm.difference = function (pick) {
+            var diff = pick.mom.weight - pick.sharty.weight;
+            var abDiff = Math.abs(diff)
+            console.log(abDiff)
+            if (abDiff > 5) {
+                pick.class = "md-warn md-hue-3"
+            } else if (abDiff > 5) {
+                pick.class = "md-warn md-hue-2"
+            } else {
+                pick.class = "md-warn md-hue-1"
+            }
+            return diff;
+        };
+
+        vm.class = function (pick) {
+            var diff = pick.mom.weight - pick.sharty.weight;
+            var abDiff = Math.abs(diff)
+            console.log(abDiff)
+            if (abDiff > 5) {
+                return "md-accent md-hue-2"
+            } else if (abDiff > 1) {
+                return "md-primary md-hue-2"
+
+            } else if (abDiff > 0) {
+                return "md-accent md-hue-1"
+            } else {
+                return "md-primary md-hue-1"
+            }
+        };
+
 
         function total() {
             var total = vm.picks.reduce(function (a, b) {

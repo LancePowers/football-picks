@@ -1,8 +1,12 @@
 <div layout="column">
     <section layout="row" ng-repeat="pick in vm.picks track by $index">
         <div layout="column">
+            <div ng-if="!vm.pre" ng-class="{{pick.class}}" layout="row">
+
+
+            </div>
             <div layout="row" class="inputs">
-                <md-input-container style="margin-right: 10px;">
+                <md-input-container ng-if="vm.pre" style="margin-right: 10px;">
                     <label>Team</label>
                     <md-select class="team-select" ng-model="pick.mom.pick" ng-change="vm.update()">
                         <md-option value="{{pick.home}}">{{pick.home}}</md-option>
@@ -10,16 +14,14 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container style="margin-right: 10px;">
-                    <label>Points</label>
-                    <md-select ng-model="pick.mom.weight" ng-change="vm.update()">
-                        <md-option ng-repeat="value in vm.values" value="{{value}}">{{value}}</md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container>
-                    <md-switch ng-model="pick.win" ng-change="vm.update()" class="md-primary">Lose/Win</md-switch>
-                </md-input-container>
+                    <p class="md-caption">Points</p>
+
+                    <h4>{{pick.mom.pick}}     {{vm.difference(pick)}}</h4>
+                    <md-input-container>
+                        <md-switch ng-model="pick.win" ng-change="vm.update()" ng-class="vm.class(pick)">Lose/Win</md-switch>
+                    </md-input-container>
             </div>
-            <div layout="row" class="sub-line">
+            <div ng-if="vm.pre" layout="row" class="sub-line">
                 <p class="md-caption">Sharty:</p>
                 <p class="md-caption"> {{pick.sharty.pick}}</p>
                 <p class="md-caption"> {{pick.sharty.weight}}</p>
