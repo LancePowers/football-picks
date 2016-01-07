@@ -6,6 +6,7 @@
             $mdThemingProvider.theme('default')
                 .accentPalette('orange');
         });
+    myApp.controller('app.controller', Controller);
 
     angular.module('pickSelect', []).directive('pickSelect', [pickSelectDirective]);
 
@@ -22,6 +23,16 @@
     }
 
 
+    Controller.$inject = ['$http', 'seasonData'];
+
+    function Controller($http, seasonData) {
+        var vm = this;
+        vm.games = $http.get('/scrape/season')
+            .then(function handlePicks(response) {
+                console.log(response)
+                seasonData.init(response.data);
+            })
+    }
     PickSelectController.$inject = ['$http'];
 
     function PickSelectController($http) {
@@ -55,13 +66,19 @@
                 points: 0,
                 season: 1349
                         }];
-        var picks = $http.get('/scrape/shoeAnalysis')
-            .then(function handlePicks(req, res, err) {
-                vm.picks = req.data;
-                vm.update();
-                console.log(vm.picks)
-            })
+        //        var picks = $http.get('/scrape/shoeAnalysis')
+        //            .then(function handlePicks(req, res, err) {
+        //                vm.picks = req.data;
+        //                vm.update();
+        //                console.log(vm.picks)
+        //            })
 
+
+        vm.games = $http.get('/scrape/season')
+            .then(function handlePicks(req, res, err) {
+                console.log(req, res, err)
+            })
+        console.log(vm.games)
         vm.difference = function (pick) {
             var diff = pick.mom.weight - pick.sharty.weight;
             var abDiff = Math.abs(diff)

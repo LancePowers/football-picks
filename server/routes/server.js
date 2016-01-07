@@ -9,7 +9,7 @@ var Schedule = require('../models/schedule');
 //var ranking = require('../logic/ranking');
 //var submit = require('../logic/submit');
 var shoe = require('../logic/shoeAnalysis.js')
-
+var season = require('../models/season')
 
 routes.get('/shoeAnalysis', function (req, res) {
     res.send(shoe);
@@ -73,6 +73,10 @@ routes.get('/stats', function (req, res) {
 
 routes.get('/picks', function (req, res) {
     res.send(ranking.newWeek.teams)
+})
+
+routes.get('/season', function (req, res) {
+    res.send(season)
 })
 
 routes.get('/games', function (req, res) {

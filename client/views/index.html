@@ -2,7 +2,7 @@
 
 <head>
 
-    <title>Seventy-Three</title>
+    <title>Pick 'Em</title>
     <Content-Type: text/html; charset=utf-8/>
     <!--    EXTERNAL-->
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -16,9 +16,22 @@
 
 </head>
 
-<body ng-app="app">
-    <pick-select></pick-select>
-
+<body ng-app="app" ng-controller="app.controller">
+    <!--    <pick-select></pick-select>-->
+    <div layout="row">
+        <div layout="column" class=" description md-whiteframe-2dp">
+            <h4 class="title">Pick 'Em</h4>
+            <md-divider class="divider"></md-divider>
+            <p>Pick 'Em is an application that predicts and weights NFL games for football pools. In 2015 Pick 'Em won 5 of 17 weeks, and finished the season in first place with a significant lead. It tied for third place on nflpickwatch.com's list of 136 expert picks, and outperformed every other prediction engine, including Microsoft Cortana and Accuscore.</p>
+            <p>Pick 'Em also automatically navigates to poolhost.com, logs in, and selects all of the picks and weights. All a user has to do is review the picks and click submit.</p>
+            <p>The chart to the left represents its predictions for the 2015 season. The width of the connection to the team represents the weight Pick 'Em placed on each team. Weights are based on a scale of 1 to the total number of games played in the week.</p>
+            <br>
+            <p class="md-caption">A special thanks to <a href="https://twitter.com/nandayadav">Nanda Yadav</a> for the team images and starting point for the d3 visualization.</p>
+        </div>
+        <div id="season-chart" style="width: 960px;"></div>
+    </div>
+    <!--    JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!--    ANGULAR-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
@@ -29,7 +42,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.6.0/angular-material-icons.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="js/main.js"></script>
+    <script src="js/seasonData.js"></script>
+    <script src="js/pickData.js"></script>
+    <script src="js/visual.js"></script>
 
 </body>
 
