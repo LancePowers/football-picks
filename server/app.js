@@ -26,7 +26,7 @@ var allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain);
 
 // *** mongoose *** //
-mongoose.connect('mongodb://heroku_xmh92p9r:heroku_xmh92p9r@ds033086.mlab.com:33086/heroku_xmh92p9r', function (err, res) {
+mongoose.connect('mongodb://heroku_xmh92p9r:6fX6JR8cOlHheAoAzkC-igVVuN5pBI7U@ds033086.mlab.com:33086/heroku_xmh92p9r', function (err, res) {
     if (err) {
         console.log('Error connecting to the Database. ' + err);
     } else {
