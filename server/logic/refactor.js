@@ -3,6 +3,7 @@ var request = require('request');
 var routes = express();
 var cheerio = require('cheerio');
 var Q = require('q');
+var Teams = require('../models/teams');
 // Get schedule
 /*
 Game get schedule
@@ -23,24 +24,36 @@ routes.get('/teams', function (request, response) {
       for (var i = 0; i < teams.length; i++) {
         var pickScore = addPicksToTeam(teams[i], res.experts)
         teams[i].pickScore = pickScore;
+        console.log('TEAM'+ i)
       }
-      // console.log(teams)
+      console.log('We Got Picks')
       return teams
     })
-   .then(getStats)
-   .then(function(res){
-     var stats = res.stats;
-     teams = res.teams.map(function(team){
-       for (var i = 0; i < stats.teams.length; i++) {
-         if(stats.teams[i] === team.code){
-           team.statScore = stats.scores[i];
-           return team;
-         }
-       }
-     })
-   })
-   .then(function(){
-       response.send(teams)
+    .then(function(teams){
+      console.log('Finding Saved Data')
+      var deferred = Q.defer();
+      Teams.findOne({}, {}, { sort: { 'created' : -1 } }, function (err, res) {
+        console.log('FROM TEAM FIND',res);
+          if (err) {
+              console.log(err)
+          } else {
+
+            if(res == undefined){
+              console.log('Created = undefined')
+              deferred.resolve(getStats(teams))
+            } else if ((Date.now()-res.created)/1000/60 <  2) {
+              console.log((Date.now()-res.created)/1000/60)
+              deferred.resolve(res.teams)
+              console.log('Created != undefined')
+            } else {
+              deferred.resolve(getStats(teams))
+            }
+          }
+      })
+      return deferred.promise
+    })
+   .then(function(teams){
+     response.send(teams)
    })
 });
 
@@ -48,11 +61,9 @@ routes.get('/injuries', function (request, response) {
   console.log('/injuries')
   fantasyData({serviceType:'schedule',week:''})
   .then(function(res){
-    console.log(res)
     return fantasyData({serviceType:'injuries',week:res.currentWeek})
   })
   .then(function(res){
-    console.log(res)
     response.send(res)
   })
 });
@@ -75,6 +86,7 @@ routes.get('/games', function (request, response) {
 })
 
 function addPicksToTeam(team, experts){
+  console.log('Preparing to Add Picks to the Team');
   var expertPoints = 0;
   for (var i = 0; i < experts.length; i++) {
     for (var j = 0; j < experts[i].picks.length; j++) {
@@ -83,6 +95,7 @@ function addPicksToTeam(team, experts){
       }
     }
   }
+  console.log('Adding Picks to the Team');
   return expertPoints
 }
 
@@ -98,9 +111,10 @@ function fantasyData(data){
 
 function getStats(teams) {
   var deferred = Q.defer();
+  console.log('Football Outsiders Data Requested')
   url = 'http://www.footballoutsiders.com/stats/teameff';
   request(url, function (error, response, html) {
-
+    console.log('Football Outsiders Data Collected')
       if (!error) {
           var $ = cheerio.load(html);
           var team, score;
@@ -125,12 +139,29 @@ function getStats(teams) {
           data.teams.splice(0, 1);
           data.scores.splice(17, 1);
           data.scores.splice(0, 1);
-          deferred.resolve({stats:data,teams:teams})
+          for (var i = 0; i < teams.length; i++) {
+            for (var j = 0; j < data.teams.length; j++) {
+              if(data.teams[j] === teams[i].code){
+                teams[i].statScore = data.scores[j];
+              }
+            }
+          }
+          var newTeam = new Teams({created:Date.now(),teams:teams})
+          newTeam.save(function (err, res) {
+              if (err) {
+                  console.log(err)
+              } else {
+                  console.log(
+                      // 'SUCCESS', res
+                      'SAVED successfully'
+                  );
+              }
+          })
+          deferred.resolve(teams)
       }
   })
   return deferred.promise;
 }
-
 
 function getPicks(teams) {
   url = 'http://nflpickwatch.com/';
