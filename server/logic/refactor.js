@@ -15,6 +15,7 @@ Game get schedule
 - playerId
 */
 routes.get('/teams', function (request, response) {
+  console.log('/teams')
     fantasyData({serviceType:'nfl-teams',week:''})
     .then(getPicks)
     .then(function(res){
@@ -39,23 +40,25 @@ routes.get('/teams', function (request, response) {
      })
    })
    .then(function(){
-     return fantasyData({serviceType:'schedule',week:''})
-   })
-   .then(function(res){
-     return fantasyData({serviceType:'injuries',week:res})
-   })
-   .then(function(res){
-     for (var i = 0; i < teams.length; i++) {
-       teams[i].injuries = res.Injuries[teams[i].code]
-     }
-
-   })
-   .then(function(){
        response.send(teams)
    })
 });
 
+routes.get('/injuries', function (request, response) {
+  console.log('/injuries')
+  fantasyData({serviceType:'schedule',week:''})
+  .then(function(res){
+    console.log(res)
+    return fantasyData({serviceType:'injuries',week:res.currentWeek})
+  })
+  .then(function(res){
+    console.log(res)
+    response.send(res)
+  })
+});
+
 routes.get('/games', function (request, response) {
+  console.log('/games')
   fantasyData({serviceType:'schedule',week:''})
     .then(function(res){
       var games = [];
@@ -146,7 +149,6 @@ function getPicks(teams) {
             }
           }
       }
-      console.log(experts)
       deferred.resolve({experts: experts, teams: teams})
   })
   return deferred.promise;
