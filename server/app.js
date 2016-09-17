@@ -7,10 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var swig = require('swig');
+var routes = require('./logic/refactor')
 
 
 // *** routes *** //
-var routes = require('./routes/server.js');
+// var routes = require('./routes/server.js');
 
 // *** express instance *** //
 var app = express();
@@ -45,7 +46,7 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 
 
 // *** main routes *** //
-app.use('/scrape', routes);
+app.use('/api', routes);
 app.use('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../client/views', 'index.html'));
 });
