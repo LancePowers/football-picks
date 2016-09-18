@@ -41,7 +41,7 @@ routes.get('/teams', function (request, response) {
             if(res == undefined){
               console.log('Created = undefined')
               deferred.resolve(getStats(teams))
-            } else if ((Date.now()-res.created)/1000/60 <  2) {
+            } else if ((Date.now()-res.created)/1000/60 <  24 * 60) {
               console.log((Date.now()-res.created)/1000/60)
               deferred.resolve(res.teams)
               console.log('Created != undefined')
