@@ -123,7 +123,7 @@ function getStats(teams) {
               scores: []
           };
           $(".stats").first().children().each(function () {
-              data.scores.push($(this).children().eq(3).text())
+              data.scores.push($(this).children().eq(4).text())
           });
           $(".stats").first().children().each(function () {
               if ($(this).children().eq(1).text() === 'LARM') {
