@@ -208,7 +208,7 @@ function getExpertPicks(item, $){
       }
     }
   }
-  if(count >= 14){
+  if(count >= 13){
     return {use: true, picks: picks};
   } else {
     return {use: false};
