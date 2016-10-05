@@ -24,7 +24,7 @@ routes.get('/teams', function (request, response) {
       for (var i = 0; i < teams.length; i++) {
         var pickScore = addPicksToTeam(teams[i], res.experts)
         teams[i].pickScore = pickScore;
-        console.log('TEAM'+ i)
+        console.log(pickScore)
       }
       console.log('We Got Picks')
       return teams
@@ -173,6 +173,7 @@ function getPicks(teams) {
           for (var i = 0; i < $(".info-row").length; i++) {
             var expert = $(".info-row")[i];
             var picks = getExpertPicks(expert, $);
+            console.log(picks)
             var name = $(expert).children().eq(1).children().text();
             var accuracy = $(expert).children().last().text();
             if(picks.use){
