@@ -41,7 +41,7 @@ routes.get('/teams', function (request, response) {
             if(res == undefined){
               console.log('Created = undefined')
               deferred.resolve(getStats(teams))
-            } else if ((Date.now()-res.created)/1000/60 < 10) {
+            } else if ((Date.now()-res.created)/1000/60 < 1) {
               console.log((Date.now()-res.created)/1000/60)
               deferred.resolve(res.teams)
               console.log('Created != undefined')
@@ -123,7 +123,7 @@ function getStats(teams) {
               scores: []
           };
           $(".stats").first().children().each(function () {
-              data.scores.push($(this).children().eq(2).text())
+              data.scores.push($(this).children().eq(4).text())
           });
           $(".stats").first().children().each(function () {
               if ($(this).children().eq(1).text() === 'LARM') {
