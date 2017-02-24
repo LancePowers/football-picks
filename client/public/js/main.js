@@ -27,11 +27,11 @@
 
     function Controller($http, seasonData) {
         var vm = this;
-        vm.games = $http.get('/scrape/season')
-            .then(function handlePicks(response) {
-                console.log(response)
-                seasonData.init(response.data);
-            })
+        // vm.games = $http.get('/scrape/season')
+        //     .then(function handlePicks(response) {
+        //         console.log(response)
+        //         seasonData.init(response.data);
+        //     })
     }
     PickSelectController.$inject = ['$http'];
 

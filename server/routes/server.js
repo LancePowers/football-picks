@@ -76,6 +76,7 @@ routes.get('/picks', function (req, res) {
 })
 
 routes.get('/season', function (req, res) {
+  console.log('season')
     res.send(season)
 })
 
