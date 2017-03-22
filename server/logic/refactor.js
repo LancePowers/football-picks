@@ -13,8 +13,8 @@ var Teams = require('../models/teams');
 //        gameTimeET: '1:00 PM',
 //        tvStation: 'CBS',
 //        winner: 'CIN' },
-
-routes.get('/season', function(request, response) {
+//
+// routes.get('/season', function(request, response) {
     fantasyData({serviceType: 'schedule', week:''}).then(function(games){
       // console.log(games.Schedule.length)
       var deferred = Q.defer()
@@ -22,10 +22,11 @@ routes.get('/season', function(request, response) {
           if (err) {
               console.log(err)
           } else {
-            // console.log(res.length)
+            console.log(res.length)
             deferred.resolve({teams:res, games:games})
           }
       })
+      console.log(deferred.promise)
       return deferred.promise
     }).then(function(obj){
       var teams = dedupWeeks(obj.teams);
@@ -34,7 +35,7 @@ routes.get('/season', function(request, response) {
       console.log(schedule, ' Schedule')
       response.send(schedule)
     })
-})
+// })
 
 function matchWeek(games,weeks) {
   var filteredWeek = []
@@ -123,9 +124,9 @@ routes.get('/teams', function(request, response) {
 
 routes.get('/injuries', function(request, response) {
     console.log('/injuries')
-    fantasyData({serviceType: 'schedule', week: ''}).then(function(res) {
+    fantasyData({serviceType: 'schedule', week: ''}).then(function(res,err) {
         return fantasyData({serviceType: 'injuries', week: res.currentWeek})
-    }).then(function(res) {
+    }).then(function(res,err) {
         response.send(res)
     })
 });

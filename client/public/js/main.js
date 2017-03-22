@@ -8,7 +8,7 @@
         });
     myApp.controller('app.controller', Controller);
 
-    angular.module('pickSelect', []).directive('pickSelect', [pickSelectDirective]);
+    // angular.module('pickSelect', []).directive('pickSelect', [pickSelectDirective]);
 
     function pickSelectDirective() {
         console.log('here')

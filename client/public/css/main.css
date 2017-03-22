@@ -1,4 +1,4 @@
-body {
+/*body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -23,7 +23,7 @@ md-select {
     top: 10px;
     right: 100px;
     position: fixed;
-    /*    border: 2px solid black;*/
+        border: 2px solid black;
 }
 
 .win {
@@ -66,4 +66,45 @@ circle {
 .title {
     font-size: 3em;
     font-weight: 100 !important
+}*/
+
+.inner-label {
+	font-family: 'Aniron', cursive;
+	font-size: 1.0rem;
+	fill: #232323;
+	cursor: default;
+}
+
+.elvish-outer-label {
+	font-family: 'Elvish', cursive;
+	font-size: 4rem;
+	fill: #e2e2e2;
+	cursor: default;
+}
+.dwarfish-outer-label {
+	font-family: 'Dwarfish', cursive;
+	font-size: 4rem;
+	fill: #e2e2e2;
+	cursor: default;
+}
+
+.outer-label {
+	font-family: 'Aniron', cursive;
+	font-size: 1.1rem;
+	fill: #5f5f5f;
+	cursor: default;
+}
+
+.outer-label-value {
+	font-family: 'Bilbo', serif;
+  	font-size: 1.3rem;
+  	fill: #878787;
+}
+
+.ring-text {
+	font-family: 'Elvish', cursive;
+	font-size: 2rem;
+	fill: #da6f0b;
+	opacity: 0.3;
+	text-anchor: middle;
 }
